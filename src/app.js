@@ -1,25 +1,40 @@
 const express = require("express");
 
 const app = express();
+
+// use of regex
+app.get('/a/' , (req, res) => {
+    res.send({ firstName: "ABCD" , lastName: "XYZ"})
+});
+// complex regex
+app.get(/.*fly$/,(req, res)=>{
+    res.send('Regex testing ')
+});
+
+// This will only handle get API call for /user
+app.get("/user", (req, res) => {
+  res.send({
+    firstName: "Suraj",
+    lastName: "Nikhade",
+  });
+});
+
+app.post("/user", (req, res) => {
+  res.send("Data send successfully");
+});
+
+app.delete("/user", (req, res) => {
+  res.send("User data ");
+});
+
+// this will match all the http method API call to /test
+app.use("/user", (req, res) => {
+    res.send("Data send successfully");
+  });
+  
 // order of route matters.
 app.use("/test", (req, res) => {
   res.send("test from server");
-});
-
-app.use("/test/2", (req, res) => {
-  res.send("test/2 from server");
-});
-
-app.use("/", (req, res) => {
-  res.send("/ called ");
-}); 
-
-app.use("/hello", (req, res) => {
-  res.send("response for hello");
-});
-
-app.use("/red", (req, res) => {
-  res.send("red is the response");
 });
 
 app.listen(3000, () => {
