@@ -1,18 +1,15 @@
 const express = require("express");
 
 const app = express();
+const { authenticate } = require("./middleware/auth/auth");
 
-app.use("/test",(req, res)=>{
-res.send("Hello from server");
+app.use('/', authenticate);
+
+app.get('/admin/getDetails', (req, res) => {
+  res.send("Admin details");
 })
 
-app.use('/hello',(req, res)=>{
-    res.send('response for hello');
-})
 
-app.use('/red' , (req, res)=>{
-    res.send('red is the response');
-})
-app.listen(3000 , ()=>{
-    console.log("run port 3000");
+app.listen(3000, () => {
+  console.log("run port 3000");
 });
